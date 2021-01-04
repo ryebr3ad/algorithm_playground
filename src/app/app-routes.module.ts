@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, RoutesRecognized } from '@angular/router';
+import { GraphComponent } from './components/graph/graph.component';
 import { SortComponent } from './components/sort/sort.component';
+import { ALL_ROUTES } from './routes';
 
-
-const routes: Routes = [
-  {path: '', redirectTo: '/sort', pathMatch: 'full'},
-  {path: 'sort', component: SortComponent}
-]
 
 @NgModule({
   imports: [
     RouterModule.forRoot(
-      routes
+      ALL_ROUTES
     )
   ],
   exports: [

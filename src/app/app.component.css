@@ -1,10 +1,23 @@
 header {
-    border: 1px solid black;
     padding: 20px;
     background-color: white;
     text-align: center;
 }
 
+main {
+    display: grid;
+}
+
+div.content {
+    background-color: white;
+    padding: 20px;
+}
+
 h1 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+
+app-nav-bar {
+    display: grid;
 }

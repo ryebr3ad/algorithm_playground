@@ -1,0 +1,7 @@
+<nav>
+    <a 
+        *ngFor="let route of routes"
+        [class.active]="activeRoute === route"
+        routerLink="/{{route.path}}"
+        (click)="setActive(route)">{{route.path | titlecase}}</a>
+</nav>
