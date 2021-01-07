@@ -16,12 +16,3 @@ h2 {
 * {
     font-family: Arial, Helvetica, sans-serif;
 }
-
-span {
-    font-size: 25px;
-    margin-right: 5px;
-}
-
-.focus {
-    color: red;
-}
