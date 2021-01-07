@@ -1,1 +1,20 @@
-<p>sort works!</p>
+<div class="content">
+    <h2>Insertion Sort</h2>
+    <div *ngFor="let sortView of insertionSortIterations">
+        <span *ngFor="let element of sortView.sequence; index as i"
+            [class.focus]="sortView.focusIndex === i">[ {{element}} ]</span>
+    </div>
+</div>
+<div class="content">
+    <h2>Merge Sort</h2>
+    <div class="merge-container" *ngFor="let mergeSortPairs of mergeSortIterations; index as i">
+        <div class="pair-container" *ngFor="let pair of mergeSortPairs">
+            <div [class.left]="i !== mergeSortIterations.length - 1" *ngIf="pair.left">
+                <span *ngFor="let element of pair.left">[ {{element}} ]</span>
+            </div>
+            <div [class.right]="i !== mergeSortIterations.length - 1" *ngIf="pair.right">
+                <span *ngFor="let element of pair.right">[ {{element}} ]</span>
+            </div>
+        </div>
+    </div>
+</div>

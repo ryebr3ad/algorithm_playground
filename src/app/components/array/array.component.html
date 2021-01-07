@@ -1,0 +1,7 @@
+<div class="content">
+    <h2>Maximum Subarray</h2>
+    <div class="array-container" *ngFor="let stats of maxSubarrays">
+        <span *ngFor="let element of stats.sequence; index as i"
+            [class.focus]="stats.maxSubarray.leftIndex <= i && stats.maxSubarray.rightIndex >= i">[ {{element}} ]</span>
+    </div>
+</div>

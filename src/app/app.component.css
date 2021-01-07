@@ -13,11 +13,6 @@ div.content {
     padding: 20px;
 }
 
-h1 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 50px;
-}
-
 app-nav-bar {
     display: grid;
 }

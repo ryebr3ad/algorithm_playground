@@ -6,13 +6,15 @@ import { SortComponent } from './components/sort/sort.component';
 import { AppRoutesModule } from './app-routes.module';
 import { GraphComponent } from './components/graph/graph.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { ArrayComponent } from './components/array/array.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SortComponent,
     GraphComponent,
-    NavBarComponent
+    NavBarComponent,
+    ArrayComponent
   ],
   imports: [
     BrowserModule,
