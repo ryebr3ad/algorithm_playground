@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Heap, MaxHeap, MinHeap } from 'src/app/structures/heap/heap';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,8 @@ export class SortService {
 
   constructor() { }
 
-  insertionSort(sequence: number[]): Observable<InsertionSortView[]> {
-    let insertionSortIterations: InsertionSortView[] = [];
+  insertionSort(sequence: number[]): Observable<InsertionSortView> {
+    let insertionSortIterations: InsertionSortView = [];
     let clonedSequence: number[] = Object.assign([], sequence);
     insertionSortIterations.push({ focusIndex: 0, sequence: Object.assign([], clonedSequence) });
 
@@ -32,18 +33,29 @@ export class SortService {
     let upper: number = sequence.length - 1;
     let middle: number = Math.floor((upper - lower) / 2);
     this.merge(iterations, sequence, lower, middle, upper, 1);
-    iterations[0].push({left: Object.assign([], sequence), right: undefined});
+    iterations[0].push({ left: Object.assign([], sequence), right: undefined });
     return of(iterations.reverse());
   }
 
-  merge(iterations: MergeSortView, sequence: number[], lower: number, middle: number, upper: number, level: number): void {
+  heapSort(sequence: number[]): Observable<HeapSortView> {
+    let heap: Heap = new MinHeap(sequence);
+    let sorted: number[] = [];
+    let iters: HeapSortView = [];
+    while (!heap.isEmpty()) {
+      iters.push(Object.assign([], heap.tree));
+      sorted.push(heap.pop());
+    }
+    return of(iters);
+  }
+
+  private merge(iterations: MergeSortView, sequence: number[], lower: number, middle: number, upper: number, level: number): void {
 
     //Break case -- arrays of size one or less do not need to be divided any further
     if (lower >= upper) {
       return;
     }
 
-    if(!iterations[level]) {
+    if (!iterations[level]) {
       iterations[level] = [];
     }
     /*
@@ -56,24 +68,24 @@ export class SortService {
      * calls to merge return
      */
     let leftMiddle: number = Math.floor((lower + middle) / 2);
-    this.merge(iterations, sequence, lower, leftMiddle, middle, level+1);
+    this.merge(iterations, sequence, lower, leftMiddle, middle, level + 1);
 
     let rightMiddle: number = Math.floor((middle + upper) / 2);
-    this.merge(iterations, sequence, middle + 1, rightMiddle, upper, level+1);
+    this.merge(iterations, sequence, middle + 1, rightMiddle, upper, level + 1);
 
     /*
      * Starts the merging process; with the given lower, middle, and upper
      * indicies, create two arrays -- one of all elements to the left of
      * the middle, and one of all elements to the right.  The elements 
      * in these arrays will already be sorted.
-     */ 
+     */
     let left: number[] = [];
     let right: number[] = [];
 
     let leftLength: number = middle - lower + 1;
     let rightLength: number = upper - middle;
 
-    let pair: ArrayPair = {left: undefined, right: undefined};
+    let pair: ArrayPair = { left: undefined, right: undefined };
 
     for (let i = 0; i < leftLength; i++) {
       left[i] = sequence[lower + i];
@@ -97,8 +109,8 @@ export class SortService {
      * and the right arrays, relative to how they compared to each other.  Once finished,
      * sequence[lower...upper] will be sorted.
      */
-    for(let k = lower; k <= upper; k++) {
-      if(left[leftIndex] < right[rightIndex]) {
+    for (let k = lower; k <= upper; k++) {
+      if (left[leftIndex] < right[rightIndex]) {
         sequence[k] = left[leftIndex];
         leftIndex++;
       }
@@ -107,20 +119,22 @@ export class SortService {
         rightIndex++;
       }
     }
-    
-    
+
+
   }
 
 }
 
 export type MergeSortView = ArrayPair[][];
+export type InsertionSortView = InsertionSortStats[];
+export type HeapSortView = number[][];
 
 export interface ArrayPair {
   left: number[];
   right: number[];
 }
 
-export interface InsertionSortView {
+export interface InsertionSortStats {
   focusIndex: number;
   sequence: number[];
 }
