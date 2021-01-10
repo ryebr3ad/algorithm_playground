@@ -23,7 +23,7 @@
 </div>
 <div class="content">
     <h2>Heap Sort</h2>
-    <div class="heap-container" *ngFor="let sequence of heapSortIterations; index as i">
+    <div *ngFor="let sequence of heapSortIterations; index as i">
         <span *ngFor="let element of sequence; first as isFirst"
             [class.focus]="isFirst">[ {{element}} ]</span>
     </div>
