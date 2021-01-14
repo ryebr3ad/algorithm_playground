@@ -31,6 +31,5 @@ describe('Linkedlist', () => {
   it('should remove a node', () => {
     expect(list.remove(4)).toBeTrue();
     expect(list.find(4)).toBeNull();
-    console.log(list.all());
   });
 });
