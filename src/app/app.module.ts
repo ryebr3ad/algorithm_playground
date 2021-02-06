@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SortComponent } from './components/sort/sort.component';
@@ -18,7 +19,8 @@ import { ArrayComponent } from './components/array/array.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutesModule
+    AppRoutesModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

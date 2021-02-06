@@ -6,7 +6,7 @@ export abstract class Heap {
         this.buildHeap();
     }
 
-    public buildHeap() {
+    private buildHeap() {
         this._heapSize = this._tree.length;
         for (let i = maxNonLeafNode(this._heapSize); i >= 0; i--) {
             this.heapify(i);

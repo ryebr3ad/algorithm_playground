@@ -7,16 +7,18 @@
 </div>
 <div class="content">
     <h2>Merge Sort</h2>
-    <div class="merge-container" *ngFor="let mergeSortPairs of
-        mergeSortIterations; index as i">
-        <div class="pair-container" *ngFor="let pair of mergeSortPairs">
-            <div [class.left]="i !== mergeSortIterations.length - 1"
-                *ngIf="pair.left">
-                <span *ngFor="let element of pair.left">[ {{element}} ]</span>
-            </div>
-            <div [class.right]="i !== mergeSortIterations.length - 1"
-                *ngIf="pair.right">
-                <span *ngFor="let element of pair.right">[ {{element}} ]</span>
+    <div *ngIf="mergeSortIterations">
+        <div class="merge-container" *ngFor="let mergeSortPairs of
+            mergeSortIterations.pairLists; index as i">
+            <div class="pair-container" *ngFor="let pair of mergeSortPairs">
+                <div [class.left]="i !== mergeSortIterations.length - 1"
+                    *ngIf="pair.left">
+                    <span *ngFor="let element of pair.left">[ {{element}} ]</span>
+                </div>
+                <div [class.right]="i !== mergeSortIterations.length - 1"
+                    *ngIf="pair.right">
+                    <span *ngFor="let element of pair.right">[ {{element}} ]</span>
+                </div>
             </div>
         </div>
     </div>

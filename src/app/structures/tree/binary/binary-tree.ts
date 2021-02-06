@@ -101,7 +101,6 @@ export class BinaryTree<T> {
         let parentNode: BinaryTreeNode<T> = foundNode.parent;
         //case one -- node is a leaf node
         if(!foundNode.left && !foundNode.right) {
-            let parentNode: BinaryTreeNode<T> = foundNode.parent;
             if(parentNode.left === foundNode) {
                 delete parentNode.left;
             }
@@ -112,7 +111,7 @@ export class BinaryTree<T> {
         //case two -- node has one child
         else if(xor(foundNode.left, foundNode.right)) {
             let newNode: BinaryTreeNode<T> = foundNode.left ? foundNode.left : foundNode.right;
-            newNode.parent = foundNode.parent;
+            newNode.parent = parentNode;
             if(parentNode) {
                 if(parentNode.left === foundNode) {
                     parentNode.left = newNode;
@@ -127,11 +126,11 @@ export class BinaryTree<T> {
         else {
             let successorNode: BinaryTreeNode<T> = this.successor(foundNode.key);
             successorNode.parent.left = successorNode.right;
+            
             successorNode.right = foundNode.right;
-
             successorNode.left = foundNode.left;
-            successorNode.left.parent = successorNode;
 
+            successorNode.left.parent = successorNode;
             successorNode.parent = parentNode;
             if(parentNode.left === foundNode) {
                 parentNode.left = successorNode;
@@ -183,6 +182,7 @@ export class BinaryTree<T> {
 
     private findNode(element: T, node: BinaryTreeNode<T>): BinaryTreeNode<T> {
         if (!node) {
+            
             return null;
         }
         if (node.key === element) {
