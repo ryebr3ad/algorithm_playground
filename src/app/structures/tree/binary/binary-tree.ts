@@ -94,53 +94,47 @@ export class BinaryTree<T> {
 
     delete(element: T): boolean {
         let foundNode: BinaryTreeNode<T> = this.findNode(element, this.root);
-        if(!foundNode) {
+        if (!foundNode) {
             return false;
         }
 
-        let parentNode: BinaryTreeNode<T> = foundNode.parent;
-        //case one -- node is a leaf node
-        if(!foundNode.left && !foundNode.right) {
-            if(parentNode.left === foundNode) {
-                delete parentNode.left;
-            }
-            else {
-                delete parentNode.right;
-            }
+        if (!foundNode.left) {
+            this.transplant(foundNode, foundNode.right);
         }
-        //case two -- node has one child
-        else if(xor(foundNode.left, foundNode.right)) {
-            let newNode: BinaryTreeNode<T> = foundNode.left ? foundNode.left : foundNode.right;
-            newNode.parent = parentNode;
-            if(parentNode) {
-                if(parentNode.left === foundNode) {
-                    parentNode.left = newNode;
-                }
-                else {
-                    parentNode.right = newNode;
-                }
-            }
-        }
+        else if (!foundNode.right) {
+            this.transplant(foundNode, foundNode.left);
+        } else {
+            let successorNode: BinaryTreeNode<T> = this.successor(element);
 
-        //case three -- node has two children
-        else {
-            let successorNode: BinaryTreeNode<T> = this.successor(foundNode.key);
-            successorNode.parent.left = successorNode.right;
-            
-            successorNode.right = foundNode.right;
+            if (successorNode.parent != foundNode) {
+                this.transplant(successorNode, successorNode.right);
+                successorNode.right = foundNode.right;
+                successorNode.right.parent = successorNode;
+            }
+
+            this.transplant(foundNode, successorNode);
+
             successorNode.left = foundNode.left;
-
             successorNode.left.parent = successorNode;
-            successorNode.parent = parentNode;
-            if(parentNode.left === foundNode) {
-                parentNode.left = successorNode;
-            }
-            else {
-                parentNode.right = successorNode;
-            }            
         }
 
         return true;
+    }
+
+    private transplant(oldNode: BinaryTreeNode<T>, newNode: BinaryTreeNode<T>): void {
+        if (!oldNode.parent) {
+            this.root = newNode;
+        }
+        else if (oldNode == oldNode.parent.left) {
+            oldNode.parent.left = newNode;
+        }
+        else {
+            oldNode.parent.right = newNode;
+        }
+
+        if (newNode) {
+            newNode.parent = oldNode.parent;
+        }
     }
 
     private adjacentElement(element: T, direction: string, fn: Function): BinaryTreeNode<T> {
@@ -182,7 +176,7 @@ export class BinaryTree<T> {
 
     private findNode(element: T, node: BinaryTreeNode<T>): BinaryTreeNode<T> {
         if (!node) {
-            
+
             return null;
         }
         if (node.key === element) {
